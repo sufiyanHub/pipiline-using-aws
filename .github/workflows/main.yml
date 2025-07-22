@@ -1,0 +1,89 @@
+name: CI/CD to EC2 on AWS
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  # 🧩 JOB 1: Create EC2 Instance with User Data
+  create-ec2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          region: us-east-1  # Change to your region
+
+      - name: Launch EC2 Instance with user-data
+        run: |
+          INSTANCE_ID=$(aws ec2 run-instances \
+            --image-id ami-0c2b8ca1dad447f8a \  # Amazon Linux 2 AMI
+            --count 1 \
+            --instance-type t2.micro \
+            --key-name my-key-pair \  # Change to your key pair
+            --security-group-ids sg-xxxxxxxx \
+            --subnet-id subnet-xxxxxxxx \
+            --user-data file://user-data.sh \
+            --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=WebServer}]' \
+            --query 'Instances[0].InstanceId' \
+            --output text)
+          
+          echo "INSTANCE_ID=$INSTANCE_ID" >> $GITHUB_ENV
+
+      - name: Get Public IP of EC2
+        run: |
+          sleep 60  # wait for EC2 to boot
+          EC2_IP=$(aws ec2 describe-instances \
+            --instance-ids ${{ env.INSTANCE_ID }} \
+            --query "Reservations[0].Instances[0].PublicIpAddress" \
+            --output text)
+          echo "EC2_IP=$EC2_IP" >> $GITHUB_ENV
+
+  # 🧩 JOB 2: Push App to EC2 and Restart HTTPD
+  push-app:
+    needs: create-ec2
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Create SSH Key File
+        run: |
+          echo "${{ secrets.EC2_KEY }}" | base64 --decode > ec2-key.pem
+          chmod 600 ec2-key.pem
+
+      - name: Upload App Files
+        run: |
+          scp -o StrictHostKeyChecking=no -i ec2-key.pem -r ./app ec2-user@${{ env.EC2_IP }}:/var/www/html/
+
+      - name: Restart HTTPD
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ec2-key.pem ec2-user@${{ env.EC2_IP }} "sudo systemctl restart httpd"
+
+      - name: Print App Endpoint
+        run: echo "App running at: http://${{ env.EC2_IP }}"
+
+  # 🧩 JOB 3: Setup Grafana with Dashboard
+  setup-grafana:
+    needs: push-app
+    runs-on: ubuntu-latest
+    steps:
+      - name: Upload Grafana Files
+        run: |
+          scp -o StrictHostKeyChecking=no -i ec2-key.pem -r ./grafana ec2-user@${{ env.EC2_IP }}:/home/ec2-user/
+
+      - name: Install Grafana + Provision Dashboard
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ec2-key.pem ec2-user@${{ env.EC2_IP }} <<EOF
+            sudo yum install -y grafana
+            sudo systemctl enable --now grafana-server
+            sudo mkdir -p /var/lib/grafana/dashboards
+            sudo cp ~/grafana/dashboard.json /var/lib/grafana/dashboards/
+            sudo cp ~/grafana/dashboard.yaml /etc/grafana/provisioning/dashboards/
+            sudo systemctl restart grafana-server
+          EOF
+
+      - name: Print Grafana Endpoint
+        run: echo "Grafana available at: http://${{ env.EC2_IP }}:3000"
