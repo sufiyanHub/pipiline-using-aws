@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Web Page</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="index.css">
+</head>
+<body class="bg-gray-100 text-gray-800 antialiased">
+
+    <!-- Header Section -->
+    <header class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-6 shadow-lg rounded-b-xl">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+            <h1 class="text-4xl font-extrabold mb-4 md:mb-0">
+                <span class="block">Advanced</span>
+                <span class="block -mt-2">Web Design</span>
+            </h1>
+            <nav>
+                <ul class="flex space-x-6 text-lg font-medium">
+                    <li><a href="#" class="hover:text-blue-200 transition duration-300 ease-in-out">Home</a></li>
+                    <li><a href="#" class="hover:text-blue-200 transition duration-300 ease-in-out">Services</a></li>
+                    <li><a href="#" class="hover:text-blue-200 transition duration-300 ease-in-out">About Us</a></li>
+                    <li><a href="#" class="hover:text-blue-200 transition duration-300 ease-in-out">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative bg-white py-20 px-6 overflow-hidden rounded-xl shadow-md mx-4 mt-8">
+        <div class="container mx-auto text-center">
+            <h2 class="text-5xl font-extrabold text-gray-900 mb-6 leading-tight">
+                Innovate. Create. Elevate.
+            </h2>
+            <p class="text-xl text-gray-600 mb-10 max-w-3xl mx-auto">
+                Discover cutting-edge solutions designed to transform your digital presence and drive unparalleled success.
+            </p>
+            <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-full shadow-lg transform hover:scale-105 transition duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-blue-300">
+                Learn More
+            </button>
+        </div>
+        <!-- Abstract background shapes for visual appeal -->
+        <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
+            <div class="absolute w-48 h-48 bg-blue-200 rounded-full opacity-20 -top-10 -left-10 transform rotate-45"></div>
+            <div class="absolute w-64 h-64 bg-indigo-200 rounded-full opacity-15 -bottom-20 -right-20 transform -rotate-30"></div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-8 px-6">
+        <div class="container mx-auto">
+            <h3 class="text-4xl font-bold text-center text-gray-900 mb-8">Our Core Features</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature Card 1 -->
+                <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <div class="text-blue-600 mb-4">
+                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h4c0 0 0 0 0 0h4l-1-1-1.25-3M15 10V5.75M15 10H9.75M15 10L12 7.5M12 7.5L9.75 10M12 7.5V10M12 10L15 12.5M12 10L9.75 12.5M12 12.5V15.25M12 15.25L15 17.75M12 15.25L9.75 17.75M12 17.75V20.25M12 20.25L15 22.75M12 20.25L9.75 22.75M12 22.75V25.25M12 25.25L15 27.75M12 25.25L9.75 27.75M12 27.75V30.25M12 30.25L15 32.75M12 30.25L9.75 32.75M12 32.75V35.25M12 35.25L15 37.75M12 35.25L9.75 37.75M12 37.75V40.25M12 40.25L15 42.75M12 40.25L9.75 42.75M12 42.75V45.25M12 45.25L15 47.75M12 45.25L9.75 47.75M12 47.75V50.25M12 50.25L15 52.75M12 50.25L9.75 52.75M12 52.75V55.25M12 55.25L15 57.75M12 55.25L9.75 57.75M12 57.75V60.25M12 60.25L15 62.75M12 60.25L9.75 62.75M12 62.75V65.25M12 65.25L15 67.75M12 65.25L9.75 67.75M12 67.75V70.25M12 70.25L15 72.75M12 70.25L9.75 72.75M12 72.75V75.25M12 75.25L15 77.75M12 75.25L9.75 77.75M12 77.75V80.25M12 80.25L15 82.75M12 80.25L9.75 82.75M12 82.75V85.25M12 85.25L15 87.75M12 85.25L9.75 87.75M12 87.75V90.25M12 90.25L15 92.75M12 90.25L9.75 92.75M12 92.75V95.25M12 95.25L15 97.75M12 95.25L9.75 97.75M12 97.75V100.25M12 100.25L15 102.75M12 100.25L9.75 102.75M12 102.75V105.25M12 105.25L15 107.75M12 105.25L9.75 107.75M12 107.75V110.25M12 110.25L15 112.75M12 110.25L9.75 112.75M12 112.75V115.25M12 115.25L15 117.75M12 115.25L9.75 117.75M12 117.75V120.25M12 120.25L15 122.75M12 120.25L9.75 122.75M12 122.75V125.25M12 125.25L15 127.75M12 125.25L9.75 127.75M12 127.75V130.25M12 130.25L15 132.75M12 130.25L9.75 132.75M12 132.75V135.25M12 135.25L15 137.75M12 135.25L9.75 137.75M12 137.75V140.25M12 140.25L15 142.75M12 140.25L9.75 142.75M12 142.75V145.25M12 145.25L15 147.75M12 145.25L9.75 147.75M12 147.75V150.25M12 150.25L15 152.75M12 150.25L9.75 152.75M12 152.75V155.25M12 155.25L15 157.75M12 155.25L9.75 157.75M12 157.75V160.25M12 160.25L15 162.75M12 160.25L9.75 162.75M12 162.75V165.25M12 165.25L15 167.75M12 165.25L9.75 167.75M12 167.75V170.25M12 170.25L15 172.75M12 170.25L9.75 172.75M12 172.75V175.25M12 175.25L15 177.75M12 175.25L9.75 177.75M12 177.75V180.25M12 180.25L15 182.75M12 180.25L9.75 182.75M12 182.75V185.25M12 185.25L15 187.75M12 185.25L9.75 187.75M12 187.75V190.25M12 190.25L15 192.75M12 190.25L9.75 192.75M12 192.75V195.25M12 195.25L15 197.75M12 195.25L9.75 197.75M12 197.75V200.25M12 200.25L15 202.75M12 200.25L9.75 202.75M12 202.75V205.25M12 205.25L15 207.75M12 205.25L9.75 207.75M12 207.75V210.25M12 210.25L15 212.75
